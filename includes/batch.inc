@@ -242,15 +242,15 @@ function islandora_batch_derivative_trigger_regenerate_all_derivatives_batch_ope
  *   An array of child PIDS to regenerate DC metadata for.
  * @param string[] $mapping
  *   The metadata mapping strategy to use when regenerating derivatives.
- * @param AbstractObject $collection
- *   The collection to perform batch operations on.
+ * @param $collection
+ *   The collection to perform batch operations on, or NULL if --pids argument used.
  * @param string $content_model
  *   The content model to regenerate for if regenerating all metadata.
  *
  * @return array
  *   A Drupal batch array.
  */
-function islandora_batch_derivative_trigger_regenerate_metadata_batch($children, $mapping, AbstractObject $collection, $content_model) {
+function islandora_batch_derivative_trigger_regenerate_metadata_batch($children, $mapping, $collection, $content_model) {
   $batch = array(
     'finished' => 'islandora_batch_derivative_trigger_derivative_regeneration_batch_finished',
     'progress_message' => t('Time elapsed: @elapsed <br/>Estimated time remaining @estimate.'),
