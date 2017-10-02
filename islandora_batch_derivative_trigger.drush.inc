@@ -104,8 +104,10 @@ function islandora_batch_derivative_trigger_get_basic_batch_info() {
   if($infile && $pids){
       throw new Exception("'pids' and 'infile' are mutually exclusive options.");
   }
+  if($infile){
   $list = file_get_contents($infile);
   $pids = islandora_batch_derivative_trigger_get_option_array_or_null($list);
+  }
   $return['pids'] = $pids;
   if (!is_null($collection)) {
     $collection = islandora_object_load($collection);
