@@ -97,6 +97,7 @@ function islandora_batch_derivative_trigger_drush_command() {
  */
 function islandora_batch_derivative_trigger_get_basic_batch_info() {
   $return = array();
+
   $infile = drush_get_option('infile');
   if($infile){
     $list = file_get_contents($infile);
@@ -107,6 +108,9 @@ function islandora_batch_derivative_trigger_get_basic_batch_info() {
     $collection = drush_get_option('collection');
     $pids = islandora_batch_derivative_trigger_get_option_array_or_null(drush_get_option('pids'));
     $content_models = islandora_batch_derivative_trigger_get_option_array_or_null(drush_get_option('content_models'));
+    if($infile && $pids){
+      throw new Exception("'pids' and 'infile' are mutually exclusive options.");
+    }
     $return['pids'] = $pids;
   }
   if (!is_null($collection)) {
@@ -148,13 +152,6 @@ function drush_islandora_batch_derivative_trigger_regenerate_derivatives() {
   $force = is_null($force) ? FALSE : TRUE;
   $infile = drush_get_option('infile');
   $pids = drush_get_option('pids');
-  if($infile && $pids){
-    throw new Exception("'pids' and 'infile' are mutually exclusive options.");
-  }
-  if($infile){
-    $list = file_get_contents($infile);
-    $pids = explode(',',$list);
-  }
   $batch_info = islandora_batch_derivative_trigger_get_basic_batch_info();
   if (!$batch_info) {
     return;
