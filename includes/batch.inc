@@ -113,10 +113,13 @@ function islandora_batch_derivative_trigger_regenerate_derivatives_batch_operati
   }
   if ($child) {
     foreach ($context['sandbox']['to_generate'] as $dsid) {
+      if(is_object($child)){
       $logs = islandora_do_derivatives($child, array(
         'force' => $force,
         'destination_dsid' => $dsid,
       ));
+      }
+      else{ return; } 
       $context['results'][] = $logs;
       foreach ((array) $logs as $log) {
         foreach ($log['messages'] as $message) {

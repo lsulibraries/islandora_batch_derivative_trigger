@@ -267,7 +267,7 @@ function drush_islandora_batch_derivative_trigger_get_metadata_mappings() {
  */
 function islandora_batch_derivative_trigger_get_option_array_or_null($option) {
   if (!is_null($option)) {
-    $option = explode(',', $option);
+    $option = array_filter(explode(",", $option));
   }
   return $option;
 }
