@@ -102,9 +102,10 @@ function islandora_batch_derivative_trigger_get_children_select_table_form_eleme
   return array(
     '#type' => 'tableselect',
     '#header' => array(
-      'label' => array('data' => t('Label')),
+      'label' => array('data' => t('Include only these items')),
       'owner' => array('data' => t('Owner')),
       'date_modified' => array('data' => t('Date Modified'))),
+    '#js_select' => FALSE,
     '#options' => $rows,
     '#empty' => t('No children found for the selected content model.'),
     '#prefix' => $pager,
