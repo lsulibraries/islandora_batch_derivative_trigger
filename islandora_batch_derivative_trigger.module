@@ -55,12 +55,12 @@ function islandora_batch_derivative_trigger_regenerate_derivatives_form(array $f
       '#suffix' => '</div>',
       'generate_missing' => array(
         '#type' => 'checkbox',
-        '#title' => t("Force generation"),
+        '#title' => t("Overwrite existing derivatives? (Force Generation)"),
         '#default_value' => 'unchecked',
       ),
       'content_model' => array(
         '#type' => 'select',
-        '#title' => t('Content model to target'),
+        '#title' => t('Select a content model'),
         '#options' => $content_models,
         '#default_value' => $content_model,
         '#ajax' => array(
@@ -74,10 +74,15 @@ function islandora_batch_derivative_trigger_regenerate_derivatives_form(array $f
       'dsids' => array(
         '#type' => 'tableselect',
         '#header' => array(
-          'dsid' => t('DSID'),
+          'dsid' => t('Include only these datastreams'),
         ),
         '#options' => islandora_batch_derivative_trigger_regenerate_derivatives_form_get_derivatives_list($content_model, array()),
+        '#js_select' => FALSE,
         '#empty' => t('No derivative DSIDs for the selected content model.'),
+      ),
+      'submit_all' => array(
+        '#type' => 'submit',
+        '#value' => t('Regen all collection items matching this content model and these datastreams'),
       ),
       'children' => islandora_batch_derivative_trigger_get_children_select_table_form_element_with_content_model($collection, array(
         'element' => 3,
@@ -85,11 +90,7 @@ function islandora_batch_derivative_trigger_regenerate_derivatives_form(array $f
       ), $content_model),
       'submit' => array(
         '#type' => 'submit',
-        '#value' => t('Regenerate selected derivatives for selected objects'),
-      ),
-      'submit_all' => array(
-        '#type' => 'submit',
-        '#value' => t('Regenerate selected derivatives for all collection objects'),
+        '#value' => t("Regen these items only and these datastreams only"),
       ),
     ),
   );
